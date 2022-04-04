@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="button" value="测试防抖,只有最后一次调用" />
+    <script>
+      let inputNode = document.querySelector("input");
+      function debounce(fn, delay) {
+        let timer;
+        return function () {
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => {
+            fn.apply(this, arguments);
+          }, delay);
+        };
+      }
+      function lastTime(e, message) {
+        console.log(e, message);
+      }
+
+      const debounce_lastTime = debounce(lastTime, 2000);
+      inputNode.addEventListener("click", (e) => {
+        debounce_lastTime(e, "测试");
+      });
+    </script>
+  </body>
+</html>
