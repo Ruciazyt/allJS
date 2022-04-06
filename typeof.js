@@ -7,6 +7,8 @@ function type_of(obj) {
 let test1 = {},
   test2 = [],
   test3 = 1;
+  test4 = null
 console.log(type_of(test1));
 console.log(type_of(test2));
 console.log(type_of(test3));
+console.log(type_of(test4));
