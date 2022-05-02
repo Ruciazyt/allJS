@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./Render.js"></script>
+  </head>
+  <body>
+    <script>
+      const vnode = {
+        tag: "div",
+        props: {
+          onClick: () => alert("hello"),
+        },
+        children: [
+          {
+            tag: "span",
+            children: "hello world",
+          },
+        ],
+      };
+      // 所以组件的本质是什么？ 是一个返回值为vnode的函数
+      // 一定得是函数嘛，也可以是对象
+      // const MyComponent = function () {
+      //   return {
+      //     tag: "div",
+      //     props: {
+      //       onClick: () => alert("hello"),
+      //     },
+      //     children: [
+      //       {
+      //         tag: "span",
+      //         children: "this is from component",
+      //       },
+      //     ],
+      //   };
+      // };
+      const MyComponent = {
+        render() {
+          return {
+            tag: "div",
+            props: {
+              onClick: () => alert("hello from the component"),
+            },
+            children: [
+              {
+                tag: "span",
+                children: "this is from component",
+              },
+            ],
+          };
+        },
+      };
+      const componentVnode = {
+        tag: MyComponent,
+      };
+      renderer(vnode, document.body);
+      renderer(componentVnode, document.body)
+    </script>
+  </body>
+</html>
