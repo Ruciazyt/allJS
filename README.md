@@ -15,8 +15,4 @@
 
     Vue_Related是根据《Vue.js设计与实现》写的练习，还在继续推进。
 
-    
-
-    测试一下分支的提交（解决了冲突）
-
-    mini_vue 根据开源项目mini_vue 仿写
+    mini_vue 根据开源项目mini_vue 仿写。
