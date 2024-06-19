@@ -1,22 +1,34 @@
+import { isObject } from "../shared";
 import { track, trigger } from "./effect";
-
-export const enum ReactiveFlags {
-  IS_REACTIVE = "__v",
-}
+import { ReactiveFlags, reactive, readonly } from "./reactive";
 
 const get = createGetter();
 const set = createSetter();
 const readonlyGet = createGetter(true);
+const shallowReadonlyGet = createGetter(true, true);
 
-function createGetter(readonly = false) {
+function createGetter(isReadonly = false, shallowReadonly = false) {
   return function get(target, key) {
     if (key === ReactiveFlags.IS_REACTIVE) {
-      return !readonly;
+      return !isReadonly;
+    } else if (key === ReactiveFlags.IS_READONLY) {
+      return isReadonly;
+    } else if (key === ReactiveFlags.IS_SHALLOW_READONLY){
+      return shallowReadonly;
     }
+    // reflect.get只是用函数来获取值
     const res = Reflect.get(target, key);
-    if (!readonly) {
+
+    if(shallowReadonly) return res;
+
+    if (isObject(res)) {
+      return isReadonly ? readonly(res) : reactive(res);
+    }
+
+    if (!isReadonly) {
       track(target, key);
     }
+
     return res;
   };
 }
@@ -34,7 +46,15 @@ export const mutableHandlers = {
 };
 
 export const readonlyHandlers = {
-  readonlyGet,
+  get: readonlyGet,
+  set(target, key, value) {
+    console.warn(`key: ${key} can not be set`);
+    return true;
+  },
+};
+
+export const shallowReadonlyHandlers = {
+  get: shallowReadonlyGet,
   set(target, key, value) {
     console.warn(`key: ${key} can not be set`);
     return true;
