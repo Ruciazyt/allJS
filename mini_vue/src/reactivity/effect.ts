@@ -3,7 +3,7 @@ import { extend } from "../shared";
 let activeEffect;
 let shouldTrack;
 // effect.ts
-class ReactiveEffect {
+export class ReactiveEffect {
   private _fn: any;
   deps: any[] = [];
   // active标记当前effect是否需要执行
