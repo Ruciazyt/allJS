@@ -3,14 +3,14 @@ const html = `
 `
 
 // 编译器是干什么的？ => 将模板编译为渲染函数 即组件中的render()
-render(){
+function render() {
     //return h('div', {id:'foo', class:cls})
     //等价于
     return {
-        tag:'div',
-        props:{
-            id:'foo',
-            class:cls
+        tag: 'div',
+        props: {
+            id: 'foo',
+            class: cls
         }
     }
 }
